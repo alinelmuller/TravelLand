@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const  { Schema } = require('mongoose')
 
-const Plant = new Schema(
+const Post = new Schema(
     {
         name: { type: String, required: true },
         description: { type: String, required: true },
@@ -10,4 +10,4 @@ const Plant = new Schema(
     { timestamps: true },
 )
 
-module.exports = mongoose.model('plants', Plant)
+module.exports = mongoose.model('posts', Post)

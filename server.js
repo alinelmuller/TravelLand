@@ -1,6 +1,6 @@
 const express = require('express')
 const db = require('./db')
-const plantController = require('./controllers/plantController')
+const postController = require('./controllers/postController')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 
@@ -20,8 +20,8 @@ app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
 
 app.get('/', (req, res) => res.send('This is our landing page!'))
 
-app.get('/plants', plantController.getAllPlants)
-app.get('/plants/:id', plantController.getPlantById)
-app.post('/plants', plantController.createPlant)
-app.put('/plants/:id', plantController.updatePlant)
-app.delete('/plants/:id', plantController.deletePlant)
+app.get('/posts', postController.getAllPosts)
+app.get('/posts/:id', postController.getPostById)
+app.post('/posts', postController.createPost)
+app.put('/posts/:id', postController.updatePost)
+app.delete('/posts/:id', postController.deletePost)
