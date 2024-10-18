@@ -1,7 +1,6 @@
 const db = require('../db')
 const Author = require('../models/author')
 
-// Connect to the database
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 const main = async () => {

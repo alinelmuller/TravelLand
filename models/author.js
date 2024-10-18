@@ -3,11 +3,11 @@ const { Schema } = mongoose
 
 const AuthorSchema = new Schema(
     {
-        name: { type: String, required: true },       // Author's name
-        bio: { type: String, required: true },        // Short biography
-        avatar_url: { type: String, required: false } // Optional URL for the author's avatar or profile picture
+        name: { type: String, required: true },       
+        bio: { type: String, required: true },        
+        avatar_url: { type: String, required: false } 
     },
-    { timestamps: true } // Automatically adds createdAt and updatedAt fields
+    { timestamps: true } 
 )
 
 module.exports = mongoose.model('Author', AuthorSchema)

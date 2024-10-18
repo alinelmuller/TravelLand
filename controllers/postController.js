@@ -25,7 +25,6 @@ const getPostById = async (req, res) => {
     }
 }
 
-
 //Create Post
 const createPost = async (req, res) => {
     try {

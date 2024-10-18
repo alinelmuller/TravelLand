@@ -1,17 +1,16 @@
 const express = require('express')
 const db = require('./db')
 const postController = require('./controllers/postController')
-const authorController = require('./controllers/authorController') // Import author controller
+const authorController = require('./controllers/authorController')
+const commentController = require('./controllers/commentController') 
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 
-// Require() imports and middleware here ^ ///////
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-// app.use() middleware here ^ ///////////////////
 app.use(logger('dev'))
 app.use(bodyParser.json())
 
@@ -32,3 +31,8 @@ app.get('/authors/:id', authorController.getAuthorById)
 app.post('/authors', authorController.createAuthor)
 app.put('/authors/:id', authorController.updateAuthor)
 app.delete('/authors/:id', authorController.deleteAuthor)
+
+// Comment Routes
+app.get('/posts/:postId/comments', commentController.getCommentsByPostId) 
+app.post('/posts/:postId/comments', commentController.createComment)     
+app.delete('/comments/:id', commentController.deleteComment)             
