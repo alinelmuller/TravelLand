@@ -1,10 +1,12 @@
 const express = require('express')
 const db = require('./db')
+const path = require('path')
 const postController = require('./controllers/postController')
 const authorController = require('./controllers/authorController')
 const commentController = require('./controllers/commentController') 
 const bodyParser = require('body-parser')
 const logger = require('morgan')
+const cors = require('cors')
 
 
 const PORT = process.env.PORT || 3001;
@@ -13,6 +15,8 @@ const app = express();
 
 app.use(logger('dev'))
 app.use(bodyParser.json())
+app.use(cors());
+app.use(express.json());
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
 

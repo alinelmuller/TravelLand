@@ -2,12 +2,13 @@ const Post = require('../models/post')
 
 const getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find()
-        res.json(posts)
+      const posts = await Post.find();
+      console.log(posts);  // Check if posts are being retrieved correctly
+      res.json(posts);
     } catch (error) {
-        return res.status(500).send(error.message);
+      res.status(500).send('Error retrieving posts');
     }
-}
+  };
 
 const getPostById = async (req, res) => {
     try {
@@ -30,9 +31,7 @@ const createPost = async (req, res) => {
     try {
         const post = await new Post(req.body)
         await post.save()
-        return res.status(201).json({
-            post,
-        });
+        return res.status(201).json({ post});
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }

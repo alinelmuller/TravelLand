@@ -115,6 +115,38 @@ button:hover {
 
 
 /********************************************
+Post List 
+********************************************/
+
+#post-list {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .post {
+    background-color: white;
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post h2 {
+    margin-top: 0;
+  }
+  
+  .post p {
+    color: #555;
+  }
+  
+  .post small {
+    color: #888;
+  }
+
+
+
+/********************************************
 Footer 
 ********************************************/
 
