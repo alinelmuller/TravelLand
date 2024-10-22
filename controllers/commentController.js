@@ -6,9 +6,9 @@ const getCommentsByPostId = async (req, res) => {
     try {
         const { postId } = req.params
         const comments = await Comment.find({ post: postId }).populate('author')
-        res.json(comments)
+        res.json({ status: 'success', data: comments })
     } catch (error) {
-        return res.status(500).send(error.message)
+        return res.status(500).json({ status: 'error', message: error.message })
     }
 }
 
@@ -16,9 +16,15 @@ const getCommentsByPostId = async (req, res) => {
 const createComment = async (req, res) => {
     try {
         const { postId } = req.params
+        const { content, author } = req.body
+
+        if (!content || !author) {
+            return res.status(400).json({ status: 'error', message: 'Content and author are required' })
+        }
+
         const comment = await new Comment({
-            content: req.body.content,
-            author: req.body.author,
+            content,
+            author,
             post: postId
         })
         await comment.save()
@@ -26,9 +32,9 @@ const createComment = async (req, res) => {
         // Add comment to the related post
         await Post.findByIdAndUpdate(postId, { $push: { comments: comment._id } })
 
-        return res.status(201).json(comment)
+        return res.status(201).json({ status: 'success', data: comment })
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        return res.status(500).json({ status: 'error', message: error.message })
     }
 }
 
@@ -40,11 +46,11 @@ const deleteComment = async (req, res) => {
         if (comment) {
             // Remove comment from the related post
             await Post.findByIdAndUpdate(comment.post, { $pull: { comments: id } })
-            return res.status(200).send('Comment deleted')
+            return res.status(200).json({ status: 'success', message: 'Comment deleted', data: comment })
         }
-        return res.status(404).send('Comment not found')
+        return res.status(404).json({ status: 'error', message: 'Comment not found' })
     } catch (error) {
-        return res.status(500).send(error.message)
+        return res.status(500).json({ status: 'error', message: error.message })
     }
 }
 
