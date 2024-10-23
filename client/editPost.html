@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
     <link rel="stylesheet" href="./style.css" />
     <title>TravelLand Blog</title>
@@ -11,7 +12,10 @@
 <body>
     <div class="container">
         <header>
-            <p>IMG</p>
+            <div class="title">
+                <h1>Travel News</h1>
+                <h2>Exclusive website with tips for your trips</h2>
+            </div>
             <nav>
                 <ul>
                     <li><a href="./index.html">Home</a></li>
@@ -21,59 +25,193 @@
                 </ul>
             </nav>
         </header>
-        <main>
-            <h1>Edit Posts</h1>
-            <div id="post-list"><!-- List of Posts will be populated here --></div>
-        </main>
-        <footer>
-          <p><a href="./index.html">Home</a> | <a href="./createPost.html">Create Post</a> | <a href="./editPost.html">Edit Post</a> | <a href="./deletePost.html">Delete Post</a></p>
-          <p>&#169; 2024 TravelLand Blog </p>
-      </footer>
-    </div>
-    <script >
+            <main>
+                <h1>Edit Posts</h1>
+                <div id="post-list"><!-- List of Posts will be populated here --></div>
+                <div class="form-container" style="display: block;">
+                    <form id="create-post-form">
+                        <div class="form-group">
+                          <label for="post-title">Title</label>
+                          <input type="text" id="post-title" placeholder="Post Title" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="post-date">Date</label>
+                          <input type="date" id="post-date" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="post-image">Image URL</label>
+                          <input type="text" id="post-image" placeholder="Image URL" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="post-content">Content</label>
+                          <textarea id="post-content" placeholder="Post Content" required></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="post-author">Author</label>
+                          <select id="post-author" required>
+                            <option value="">Select an Author</option>
+                            <!-- List Authors -->
+                          </select>
+                        </div>
+                        <button type="submit" id="submit-btn">Edit Post</button>
+                      </form>
+                </div>
+            </main>
+            <footer>
+                <div class="line"></div>
+                <div class="lineName"> Blog by Aline Muller </div>
+                <div class="line"></div>
+            </footer>
+        </div>
+        <script>
+            // Track if we are editing an existing post
+let editingPostId = null;
 
 // Fetch and display posts from newest to oldest
 async function fetchPosts() {
-            try {
-                const response = await axios.get('http://localhost:3001/posts'); 
-                console.log(response); // Check the entire response
-                let posts = response.data.data;
-    
-                if (Array.isArray(posts) && posts.length > 0) {
-                    // Log posts to check if they are being fetched correctly
-                    console.log(posts);
-                    // Sort posts by date from newest to oldest
-                    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-                    displayPosts(posts);
-                } else {
-                    document.getElementById('post-list').innerHTML = '<p>No posts available.</p>';
-                }
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-                document.getElementById('post-list').innerHTML = '<p>Error fetching posts.</p>';
-            }
+    try {
+        const response = await axios.get('http://localhost:3001/posts');
+        let posts = response.data.data;
+
+        if (Array.isArray(posts) && posts.length > 0) {
+            posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            displayPosts(posts);
+        } else {
+            document.getElementById('post-list').innerHTML = '<p>No posts available.</p>';
         }
-    
-        // Function to display posts on the page
-        function displayPosts(posts) {
-            const postList = document.getElementById('post-list');
-            postList.innerHTML = '';
-    
-            posts.forEach(post => {
-                const postItem = document.createElement('div');
-                postItem.classList.add('post-item');
-    
-                postItem.innerHTML = `
-                    <h3>${post.title}</h3>
-                    <p>${post.content}</p>
-                    <p><strong>Author:</strong> ${post.author}</p>
-                    <p><strong>Date:</strong> ${new Date(post.date).toLocaleDateString()}</p>
-                    <hr>
-                `;
-                postList.appendChild(postItem);
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        document.getElementById('post-list').innerHTML = '<p>Error fetching posts.</p>';
+    }
+}
+
+// Fetch and display authors in the dropdown
+async function fetchAuthors() {
+    try {
+        const response = await axios.get('http://localhost:3001/authors');
+        let authors = response.data.data;
+
+        if (Array.isArray(authors) && authors.length > 0) {
+            const authorSelect = document.getElementById('post-author');
+            authorSelect.innerHTML = '<option value="">Select an Author</option>'; // Reset options
+
+            authors.forEach(author => {
+                const option = document.createElement('option');
+                option.value = author._id;
+                option.textContent = author.name;
+                authorSelect.appendChild(option);
             });
+        } else {
+            document.getElementById('post-author').innerHTML = '<option value="">No authors available</option>';
         }
-        fetchPosts(); 
-    </script>
-</body>
+    } catch (error) {
+        console.error('Error fetching authors:', error);
+        document.getElementById('post-author').innerHTML = '<option value="">Error loading authors</option>';
+    }
+}
+
+// Function to display posts on the page
+function displayPosts(posts) {
+    const postList = document.getElementById('post-list');
+    postList.innerHTML = '';
+    console.log(posts)
+    posts.forEach(post => {
+        const postItem = document.createElement('div');
+        postItem.classList.add('post-item');
+        
+        postItem.innerHTML = `
+            <h3>${post.title}</h3>
+            <div class="image"><img src="${post.image}" />
+            <div>${post.content}</div>
+            <div class="author">${post.author} - ${new Date(post.date).toLocaleDateString()}</div>  
+            <button onclick="editPost('${post._id}')">Edit Post</button>
+
+        `;
+        postList.appendChild(postItem);
+    });
+}
+
+// Function to edit a post by ID
+async function editPost(postId) {
+    try {
+        const response = await axios.get(`http://localhost:3001/posts/${postId}`);
+        const post = response.data.data;
+
+        // Populate the form with the post data
+        document.getElementById('post-title').value = post.title;
+        document.getElementById('post-date').value = post.date.split('T')[0];
+        document.getElementById('post-image').value = post.image;
+        document.getElementById('post-content').value = post.content;
+        document.getElementById('post-author').value = post.author;
+
+        // Set the editingPostId to the post being edited
+        editingPostId = postId;
+
+        // Change the button text to "Update Post"
+        document.getElementById('submit-btn').textContent = 'Update Post';
+
+        // Hide the post list
+        document.getElementById('post-list').style.display = 'none';
+
+    } catch (error) {
+        console.error('Error fetching post:', error);
+    }
+}
+
+// Event listener for form submission (create or update post)
+document.getElementById('create-post-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const title = document.getElementById('post-title').value;
+    const date = document.getElementById('post-date').value;
+    const image = document.getElementById('post-image').value;
+    const content = document.getElementById('post-content').value;
+    const author = document.getElementById('post-author').value;
+
+    const postData = {
+        title, date, image, content, author
+    };
+
+    try {
+        if (editingPostId) {
+            // If editingPostId is set, update the existing post
+            await axios.put(`http://localhost:3001/posts/${editingPostId}`, postData);
+            alert('Post updated successfully!');
+        } else {
+            // If no editingPostId, create a new post
+            await axios.post('http://localhost:3001/posts', postData);
+            alert('Post created successfully!');
+        }
+
+        // Reset the form
+        document.getElementById('create-post-form').reset();
+        editingPostId = null;
+        document.getElementById('submit-btn').textContent = 'Create Post';
+
+        // Show the post list again
+        document.getElementById('post-list').style.display = 'block';
+      
+
+        // Refresh the list of posts
+        fetchPosts();
+    
+    } catch (error) {
+        console.error('Error submitting post:', error);
+        alert('Failed to submit post.');
+    }
+});
+
+
+
+
+// Initialize
+fetchPosts();
+fetchAuthors();
+
+        </script>
+    </body>
 </html>
+
+
+
+

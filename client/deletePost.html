@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
-        <link rel="stylesheet" href="./style.css" />
-        <title>TravelLand Blog</title>
-    </head>
-    <body>
-        <div class="container">
-            <header>
-                <p>IMG</p>
-                <nav>
-                    <ul>
-                        <li><a href="./index.html">Home</a></li>
-                        <li><a href="./createPost.html">Create Post</a></li>
-                        <li><a href="./editPost.html">Edit Post</a></li>
-                        <li><a href="./deletePost.html">Delete Post</a></li>
-                    </ul>
-                </nav>
-            </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+    <link rel="stylesheet" href="./style.css" />
+    <title>TravelLand Blog</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="title">
+                <h1>Travel News</h1>
+                <h2>Exclusive website with tips for your trips</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./createPost.html">Create Post</a></li>
+                    <li><a href="./editPost.html">Edit Post</a></li>
+                    <li><a href="./deletePost.html">Delete Post</a></li>
+                </ul>
+            </nav>
+        </header>
             <main>
-                <h1>All Posts</h1>
+                <h1>Delete</h1>
                 <div id="post-list"><!-- List of Posts will be populated here --></div>
             </main>
             <footer>
-                <p><a href="./index.html">Home</a> | <a href="./createPost.html">Create Post</a> | <a href="./editPost.html">Edit Post</a> | <a href="./deletePost.html">Delete Post</a></p>
-                <p>&#169; 2024 TravelLand Blog </p>
+                <div class="line"></div>
+                <div class="lineName"> Blog by Aline Muller </div>
+                <div class="line"></div>
             </footer>
         </div>
         <script>
@@ -62,13 +67,11 @@
                     postItem.classList.add('post-item');
                     
                     postItem.innerHTML = `
-                        <h3>${post._id}</h3>
                         <h3>${post.title}</h3>
-                        <p>${post.content}</p>
-                        <p><strong>Author:</strong> ${post.author}</p>
-                        <p><strong>Date:</strong> ${new Date(post.date).toLocaleDateString()}</p>
+                        <div class="image"><img src="${post.image}" />
+                        <div>${post.content}</div>
+                        <div class="author">${post.author} - ${new Date(post.date).toLocaleDateString()}</div>  
                         <button onclick="deletePost('${post._id}')">Delete Post</button> 
-                        <hr>
                     `;
                     postList.appendChild(postItem);
                 });

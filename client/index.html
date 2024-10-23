@@ -4,17 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap" rel="stylesheet">
+    
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+
     <link rel="stylesheet" href="./style.css" />
-    <title>TravelLand Blog</title>
+    <title>Travel News Blog</title>
 </head>
 <body>
     <div class="container">
         <header>
-            <p>IMG</p>
+            <div class="title">
+                <h1>Travel News</h1>
+                <h2>Exclusive website with tips for your trips</h2>
+            </div>
             <nav>
                 <ul>
                     <li><a href="./index.html">Home</a></li>
+                    <li><a href="./index.html">About Me</a></li>
                     <li><a href="./createPost.html">Create Post</a></li>
                     <li><a href="./editPost.html">Edit Post</a></li>
                     <li><a href="./deletePost.html">Delete Post</a></li>
@@ -22,12 +33,23 @@
             </nav>
         </header>
         <main>
-            <h1>All Posts</h1>
             <div id="post-list"><!-- List of Posts will be populated here --></div>
+            <div class="postcard">
+                <div class="col-1"><img src="./img/winter.png" width="280" height="365" /></div>
+                <div class="col-2"><img src="./img/postcard-divider.png" width="30" height="360" /></div>
+                <div class="col-3">
+                    <img src="./img/about-par-avion-stamp.png" width="80" height="80" class="imgRight">
+                    <img src="./img/About-Stamp-Autumn.png" width="175" height="105">
+                    <h4>About Me</h4>
+                    <p>Hi, I’m Aline! I’ve spent the past 10 years living in different cities across Canada, and I’ve finally found my place in beautiful Alberta. I’m passionate about front-end development, where I enjoy building engaging, interactive web experiences.</p>
+                    <p>Now based in Calgary, near the majestic Rockies, I’m able to indulge in one of my favorite hobbies—skiing. Whether I’m coding or hitting the slopes, I’m always eager to embrace new challenges and adventures.</p>
+                </div>
+            </div>
         </main>
         <footer>
-            <p><a href="./index.html">Home</a> | <a href="./createPost.html">Create Post</a> | <a href="./editPost.html">Edit Post</a> | <a href="./deletePost.html">Delete Post</a></p>
-            <p>&#169; 2024 TravelLand Blog </p>
+            <div class="line"></div>
+            <div class="lineName"> Blog by Aline Muller </div>
+            <div class="line"></div>
         </footer>
     </div>
     <script >
@@ -35,11 +57,9 @@
         async function fetchPosts() {
             try {
                 const response = await axios.get('http://localhost:3001/posts'); 
-                console.log(response); 
                 let posts = response.data.data;
 
                 if (Array.isArray(posts) && posts.length > 0) {
-                    console.log(posts);
                     // Sort posts by date from newest to oldest
                     posts.sort((a, b) => new Date(b.date) - new Date(a.date));
                     displayPosts(posts);
@@ -53,23 +73,32 @@
         }
 
         // Function to display posts on the page
-        function displayPosts(posts) {
+        async function displayPosts(posts) {
+            
             const postList = document.getElementById('post-list');
             postList.innerHTML = '';
 
-            posts.forEach(post => {
+            for (const post of posts) {
+
+                const responseAuthor = await axios.get(`http://localhost:3001/authors/${post.author}`); 
+                let author = responseAuthor.data.data
+
+                console.log(author)
+               
                 const postItem = document.createElement('div');
-                postItem.classList.add('post-item');
+                postItem.classList.add('postItem');
+
+            
 
                 postItem.innerHTML = `
                     <h3>${post.title}</h3>
-                    <p>${post.content}</p>
-                    <p><strong>Author:</strong> ${post.author}</p> 
-                    <p><strong>Date:</strong> ${new Date(post.date).toLocaleDateString()}</p>
-                    <hr>
+                    <div class="image"><img src="${post.image}" />
+                    <div>${post.content}</div>
+                    <div class="author"> ${author.name} - ${new Date(post.date).toLocaleDateString()}</div>    
                 `;
                 postList.appendChild(postItem);
-            });
+                // 
+            }
         }
         fetchPosts();
     </script>

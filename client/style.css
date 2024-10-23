@@ -4,8 +4,9 @@
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
-    color: #333;
+    font-family: "Noto Serif Display";
+    font-size: 14px;
+    color: #3e251e;
     background-color: #f7f7f7;
     display: flex;
     flex-direction: column;
@@ -13,6 +14,7 @@ body {
 }
 
 .container {
+    background-image: url(img/background.png);
     width: 800px;
     background-color: white;
     display: flex;
@@ -22,11 +24,33 @@ body {
     padding: 25px;
 }
 
-header {
-    height: 250px;
-    border-bottom: black solid 1px;
+.title{
+    border-bottom: #3e251e solid 1px;
+    padding-bottom: 25px;
 }
 
+header h1{
+    display: flex;
+    justify-content: center;
+    font-size: 60px;
+}
+
+header h2{
+    display: flex;
+    justify-content: center;
+    font-size: 15px;
+}
+
+nav{
+    margin-top:3px;
+    border-top: #3e251e solid 1px;
+    display: flex;
+    justify-content: center;
+
+}
+nav a{
+    color: #3e251e;
+}
 nav ul {
     display: flex;
     list-style: none;
@@ -113,7 +137,6 @@ button:hover {
     opacity: 0.9;
 }
 
-
 /********************************************
 Post List 
 ********************************************/
@@ -122,29 +145,33 @@ Post List
     display: flex;
     flex-direction: column;
     padding: 20px;
-  }
-  
-  .post {
-    background-color: white;
-    margin: 10px 0;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .post h2 {
-    margin-top: 0;
-  }
-  
-  .post p {
-    color: #555;
-  }
-  
-  .post small {
-    color: #888;
-  }
+}
 
+#post-list  h3 {
+    margin-bottom: 10px;
+}
+#post-list .image{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+#post-list  img {
+    width: 100%;
+    margin-bottom: 30px;
 
+}
+#post-list p{
+    padding-bottom:20px;
+}
+#post-list .author {
+    padding-top: 20px;
+    display: flex;
+}
+.postItem{
+    border-bottom: #3e251e solid 1px;  
+    padding:30px 0;  
+}
 
 /********************************************
 Footer 
@@ -152,22 +179,57 @@ Footer
 
 footer {
     display: flex;
-    flex-direction: column;
-    padding: 20px 0;
+}
+footer .lineName{
+    margin: 15px;
+    width: 50%;
+    text-align: center;
+
+}
+footer .line{
+    margin-top:22px ;
+    border-top:#3e251e solid 1px;
+    width: 100%;
+    height: 5px;
+    border-bottom:#3e251e solid 1px;
 }
 
-footer p {
-    color: #c3c3c3;
-    font-size: 13px;
+/********************************************
+Postal Card
+********************************************/
+
+.postcard{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: url(./img/postcard-bg.jpg);
+    background-size: 320px 320px;
+    margin: 60px;
+    font-family: "Playwrite GB S", serif;
+    font-size: 12px;
+    font-weight: 200;
+}
+
+.postcard .col-1 {
+    flex: 0 1 280px;
+}
+
+.postcard .col-2 {
+    flex: 0 1 30px;
+    padding: 10px 0 0;
+}
+
+.postcard .col-3 {
+    flex: 0 1 350px;
+    position: relative;
+    padding: 10px ;
+}
+
+.postcard  .col-3 h4{
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
-footer a {
-    color: #d64348;
-    text-decoration: none;
-    margin: 0 2px;
-}
-
-footer a:hover {
-    color: #c3c3c3;
+.postcard .col-3 .imgRight{
+    margin-left: 85px;
 }
