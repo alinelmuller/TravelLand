@@ -70,15 +70,18 @@ Admin - Form
 
 .form-container {
     background-color: white;
-    padding: 20px;
+    padding: 25px 25px 80px 25px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 760px;
+    margin: 30px 0;
+    position: relative;
 }
 
 form {
     display: flex;
     flex-direction: column;
+    padding-top: 30px;
 }
 
 .form-group {
@@ -268,6 +271,23 @@ button {
 .btn:active .icon svg {
     transform: scale(0.8);
 }
+
+.regularBtn{
+    padding: 0 20px;
+    height: 35px;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    right: 25px;
+    bottom: 35px;
+}
+
+.regularBtn:hover{
+    background-color: #3e251e; 
+    color: white;
+}
+
+
 
 .editBtn{
     background: rgb(209, 207, 59);
