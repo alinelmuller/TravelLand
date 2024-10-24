@@ -19,7 +19,7 @@ Travel Land Blog is a full-stack application that allows users to create, edit, 
 ## ERD
 - **Author to Post**: One-to-Many (An author can create many posts, but each post is written by one author)
 - **Post to Comment**: One-to-Many (A post can have many comments, but each comment is associated with one post)
-![ERD](client/img/TravelandERD.png)
+![ERD](./client/img/TravelandERD.png)
 
 ## MVP
 - Implement full CRUD functionality for blog posts.
