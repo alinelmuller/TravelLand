@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap" rel="stylesheet">
-    
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
 
@@ -52,15 +51,15 @@
             <div class="line"></div>
         </footer>
     </div>
-    <script >
+
+    <script>
         // Fetch and display posts from newest to oldest
         async function fetchPosts() {
             try {
-                const response = await axios.get('http://localhost:3001/posts'); 
+                const response = await axios.get('http://localhost:3001/posts');
                 let posts = response.data.data;
 
                 if (Array.isArray(posts) && posts.length > 0) {
-                    // Sort posts by date from newest to oldest
                     posts.sort((a, b) => new Date(b.date) - new Date(a.date));
                     displayPosts(posts);
                 } else {
@@ -74,33 +73,122 @@
 
         // Function to display posts on the page
         async function displayPosts(posts) {
-            
             const postList = document.getElementById('post-list');
             postList.innerHTML = '';
 
             for (const post of posts) {
+                const responseAuthor = await axios.get(`http://localhost:3001/authors/${post.author}`);
+                let author = responseAuthor.data.data;
 
-                const responseAuthor = await axios.get(`http://localhost:3001/authors/${post.author}`); 
-                let author = responseAuthor.data.data
-
-                console.log(author)
-               
                 const postItem = document.createElement('div');
                 postItem.classList.add('postItem');
 
-            
-
                 postItem.innerHTML = `
                     <h3>${post.title}</h3>
-                    <div class="image"><img src="${post.image}" />
+                    <div class="image"><img src="${post.image}" alt="Post Image" /></div>
                     <div>${post.content}</div>
-                    <div class="author"> ${author.name} - ${new Date(post.date).toLocaleDateString()}</div>    
+                    <div class="author">${author.name} - ${new Date(post.date).toLocaleDateString()}</div>
+                    <a href="#" class="toggle-comments" onclick="toggleComments('${post._id}', this, event)">View Comments</a>
+                    <div id="comments-section-${post._id}" class="comments-section" style="display: none;">
+                        <div id="comments-list-${post._id}" class="comments-list"><!-- Comments populated here --></div>
+                        <form onsubmit="submitComment(event, '${post._id}')">
+                            <textarea id="comment-content-${post._id}" placeholder="Write your comment..." required></textarea>
+                            <input id="comment-author-${post._id}" type="text" placeholder="Your name" required>  <!-- Name input -->
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
                 `;
                 postList.appendChild(postItem);
-                // 
             }
         }
-        fetchPosts();
+
+        // Toggle comments
+        async function toggleComments(postId, element, event) {
+            event.preventDefault(); 
+            const commentsSection = document.getElementById(`comments-section-${postId}`);
+
+            if (commentsSection.style.display === "none") {
+                commentsSection.style.display = "block";
+                element.textContent = "Hide Comments";
+                fetchComments(postId);  
+            } else {
+                commentsSection.style.display = "none";
+                element.textContent = "View Comments";
+            }
+        }
+
+        // Fetch and display comments for a specific post
+        async function fetchComments(postId) {
+            try {
+                const response = await axios.get(`http://localhost:3001/posts/${postId}/comments`);
+                const comments = response.data.data;
+                const commentsList = document.getElementById(`comments-list-${postId}`);
+
+                commentsList.innerHTML = '';
+
+                if (comments.length === 0) {
+                    commentsList.innerHTML = '<p>No comments yet.</p>';
+                } else {
+                    comments.forEach(comment => {
+                        const commentItem = document.createElement('div');
+                        commentItem.classList.add('comment-item');
+
+                        commentItem.innerHTML = `
+                            <span class="delete-comment" onclick="deleteComment('${comment._id}', '${postId}')">X</span>
+                            <p class="commentList"><strong>${comment.name}:</strong> ${comment.content}</p>
+                        `;
+                        commentsList.appendChild(commentItem);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching comments:', error);
+            }
+        }
+
+        // Submit a new comment for a post
+        async function submitComment(event, postId) {
+            event.preventDefault();
+
+            const content = document.getElementById(`comment-content-${postId}`).value;
+            const name = document.getElementById(`comment-author-${postId}`).value;  
+
+            try {
+                const response = await axios.post(`http://localhost:3001/posts/${postId}/comments`, {
+                    content,
+                    name  
+                });
+
+                if (response.data.status === 'success') {
+                    alert('Comment added successfully!');
+                    fetchComments(postId); 
+                }
+            } catch (error) {
+                console.error('Error submitting comment:', error);  
+            }
+            document.getElementById(`comment-content-${postId}`).value = '';
+            document.getElementById(`comment-author-${postId}`).value = '';
+        }
+
+        // Delete a comment
+        async function deleteComment(commentId, postId) {
+            // Confirm deletion
+            const confirmDelete = confirm('Are you sure you want to delete this comment?');
+            if (!confirmDelete) {
+                return; 
+            }
+            try {
+                const response = await axios.delete(`http://localhost:3001/comments/${commentId}`);
+
+                if (response.data.status === 'success') {
+                    alert('Comment deleted successfully!');
+                    fetchComments(postId);  // Refresh comments after deletion
+                }
+            } catch (error) {
+                console.error('Error deleting comment:', error);
+            }
+        }
+
+        fetchPosts();  
     </script>
 </body>
 </html>

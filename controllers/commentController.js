@@ -4,39 +4,48 @@ const Post = require('../models/post')
 // Get All Comments for a Post
 const getCommentsByPostId = async (req, res) => {
     try {
-        const { postId } = req.params
-        const comments = await Comment.find({ post: postId }).populate('author')
-        res.json({ status: 'success', data: comments })
+        const { postId } = req.params;
+        const comments = await Comment.find({ post: postId });  
+        res.status(200).json({ status: 'success', data: comments });
     } catch (error) {
-        return res.status(500).json({ status: 'error', message: error.message })
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Error fetching comments' });
     }
-}
+};
 
 // Create a Comment
 const createComment = async (req, res) => {
     try {
-        const { postId } = req.params
-        const { content, author } = req.body
+        const { postId } = req.params;
+        const { content, name } = req.body;
 
-        if (!content || !author) {
-            return res.status(400).json({ status: 'error', message: 'Content and author are required' })
+        if (!content || !name) {
+            return res.status(400).json({ status: 'error', message: 'Name and content are required' });
         }
 
-        const comment = await new Comment({
+        // Verify if the post exists
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ status: 'error', message: 'Post not found' });
+        }
+
+        const comment = new Comment({
             content,
-            author,
+            name,
             post: postId
-        })
-        await comment.save()
+        });
 
-        // Add comment to the related post
-        await Post.findByIdAndUpdate(postId, { $push: { comments: comment._id } })
+        await comment.save();
 
-        return res.status(201).json({ status: 'success', data: comment })
+        post.comments.push(comment._id);
+        await post.save();
+
+        res.status(201).json({ status: 'success', data: comment });
     } catch (error) {
-        return res.status(500).json({ status: 'error', message: error.message })
+        console.error(error); // Log full error for debugging
+        res.status(500).json({ status: 'error', message: 'Error creating comment' });
     }
-}
+};
 
 // Delete a Comment
 const deleteComment = async (req, res) => {

@@ -9,9 +9,12 @@ body {
     color: #3e251e;
     background-color: #f7f7f7;
     display: flex;
-    flex-direction: column;
+     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    background-color: #3e251e3f;
 }
+
 
 .container {
     background-image: url(img/background.png);
@@ -173,6 +176,8 @@ Post List
     padding:30px 0;  
 }
 
+.commentList{padding-bottom: 0 !important;}
+
 /********************************************
 Footer 
 ********************************************/
@@ -233,3 +238,73 @@ Postal Card
 .postcard .col-3 .imgRight{
     margin-left: 85px;
 }
+
+/********************************************
+Button
+********************************************/
+
+button {
+
+
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: red;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+   }
+   
+   button, button span {
+    transition: 200ms;
+   }
+   
+   button .text {
+    transform: translateX(35px);
+    color: white;
+    font-weight: bold;
+   }
+   
+
+   .deleteBtn{
+    width: 200px;
+    height: 50px;
+}
+
+   button .icon {
+    position: absolute;
+    border-left: 1px solid #c41b1b;
+    transform: translateX(110px);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+   
+   button svg {
+    width: 15px;
+    fill: #eee;
+   }
+   
+   button:hover {
+    background: #ff3636;
+   }
+   
+   button:hover .text {
+    color: transparent;
+   }
+   
+   button:hover .icon {
+    width: 150px;
+    border-left: none;
+    transform: translateX(0);
+   }
+   
+   button:focus {
+    outline: none;
+   }
+   
+   button:active .icon svg {
+    transform: scale(0.8);
+   }
