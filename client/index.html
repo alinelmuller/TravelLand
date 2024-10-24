@@ -55,7 +55,7 @@
     <script>
         // Fetch and display posts from newest to oldest
         async function fetchPosts() {
-            try {
+                try {
                 const response = await axios.get('http://localhost:3001/posts');
                 let posts = response.data.data;
 

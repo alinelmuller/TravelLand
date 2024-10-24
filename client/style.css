@@ -113,33 +113,6 @@ textarea {
     margin-top: 15px;
 }
 
-button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100px;
-    text-align: center;
-}
-
-#add-button {
-    background-color: #28a745;
-}
-
-#edit-button {
-    background-color: #ffc107;
-}
-
-#delete-button {
-    background-color: #dc3545;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
 /********************************************
 Post List 
 ********************************************/
@@ -177,6 +150,7 @@ Post List
 }
 
 .commentList{padding-bottom: 0 !important;}
+.post-item {position: relative;}
 
 /********************************************
 Footer 
@@ -244,67 +218,66 @@ Button
 ********************************************/
 
 button {
-
-
-    cursor: pointer;
     display: flex;
-    align-items: center;
-    background: red;
+    cursor: pointer;
     border: none;
     border-radius: 5px;
     box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-   }
-   
-   button, button span {
-    transition: 200ms;
-   }
-   
-   button .text {
-    transform: translateX(35px);
-    color: white;
-    font-weight: bold;
-   }
-   
-
-   .deleteBtn{
-    width: 200px;
-    height: 50px;
+}
+.deleteBtn{
+    position: absolute;
+    right: 0;
+    top: -10px;
+    align-items: center;
+    width: 150px;
+    height: 35px;
+    background: red;
 }
 
-   button .icon {
+.deleteBtn span {
+    transition: 200ms;
+} 
+   
+.deleteBtn .text {
+    transform: translateX(20px);
+    color: white;
+    font-weight: bold;
+}
+
+.deleteBtn .icon {
     position: absolute;
     border-left: 1px solid #c41b1b;
     transform: translateX(110px);
-    height: 40px;
+    height: 30px;
     width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-   }
+}
    
-   button svg {
+.deleteBtn svg {
     width: 15px;
     fill: #eee;
-   }
-   
-   button:hover {
+}
+
+.deleteBtn:hover {
     background: #ff3636;
-   }
-   
-   button:hover .text {
+}
+
+.deleteBtn:hover .text {
     color: transparent;
-   }
-   
-   button:hover .icon {
+}
+
+.deleteBtn:hover .icon {
     width: 150px;
     border-left: none;
     transform: translateX(0);
-   }
-   
-   button:focus {
+}
+
+.deleteBtn:focus {
     outline: none;
-   }
-   
-   button:active .icon svg {
+}
+
+.deleteBtn:active .icon svg {
     transform: scale(0.8);
-   }
+}
