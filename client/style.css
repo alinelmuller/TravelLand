@@ -223,29 +223,21 @@ button {
     border-radius: 5px;
     box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
 }
-.deleteBtn{
+.btn{
     position: absolute;
     right: 0;
     top: 20px;
     align-items: center;
     width: 150px;
     height: 35px;
-    background: red;
 }
 
-.deleteBtn span {
+.btn span {
     transition: 200ms;
 } 
    
-.deleteBtn .text {
-    transform: translateX(20px);
-    color: white;
-    font-weight: bold;
-}
-
-.deleteBtn .icon {
+.btn .icon {
     position: absolute;
-    border-left: 1px solid #c41b1b;
     transform: translateX(110px);
     height: 30px;
     width: 40px;
@@ -254,29 +246,59 @@ button {
     justify-content: center;
 }
    
-.deleteBtn svg {
+.btn svg {
     width: 15px;
     fill: #eee;
 }
 
-.deleteBtn:hover {
-    background: #ff3636;
-}
-
-.deleteBtn:hover .text {
+.btn:hover .text {
     color: transparent;
 }
 
-.deleteBtn:hover .icon {
+.btn:hover .icon {
     width: 150px;
     border-left: none;
     transform: translateX(0);
 }
 
-.deleteBtn:focus {
+.btn:focus {
     outline: none;
 }
 
-.deleteBtn:active .icon svg {
+.btn:active .icon svg {
     transform: scale(0.8);
+}
+
+.editBtn{
+    background: rgb(209, 207, 59);
+
+}
+.editBtn .icon{
+    border-left: 1px solid  rgb(184, 182, 30);
+}
+
+.editBtn .text {
+    transform: translateX(32px);
+    color: #3e251e;
+    font-weight: bold;
+}
+.editBtn:hover {
+    background: rgba(255, 251, 0, 0.491);
+}
+
+.deleteBtn{
+    background: red;
+}
+
+.deleteBtn .icon{
+    border-left: 1px solid #c41b1b;
+}
+
+.deleteBtn .text {
+    transform: translateX(20px);
+    color: white;
+    font-weight: bold;
+}
+.deleteBtn:hover {
+    background: #ff3636;
 }
