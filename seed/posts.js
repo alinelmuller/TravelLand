@@ -95,7 +95,7 @@ const main = async () => {
         }
       ];
       
-
+    await Post.deleteMany()
     await Post.insertMany(posts)
     console.log("Created some blog posts!")
 }

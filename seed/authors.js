@@ -21,7 +21,7 @@ const main = async () => {
             avatar_url: 'https://example.com/emily.jpg'
         }
     ]
-
+    await Author.deleteMany()
     await Author.insertMany(authors)
     console.log('Created some authors!')
 }
