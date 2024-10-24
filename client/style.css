@@ -130,7 +130,6 @@ Post List
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 30px;
 }
 #post-list  img {
     width: 100%;
@@ -150,7 +149,7 @@ Post List
 }
 
 .commentList{padding-bottom: 0 !important;}
-.post-item {position: relative;}
+.postItem {position: relative;}
 
 /********************************************
 Footer 
@@ -227,7 +226,7 @@ button {
 .deleteBtn{
     position: absolute;
     right: 0;
-    top: -10px;
+    top: 20px;
     align-items: center;
     width: 150px;
     height: 35px;
