@@ -72,8 +72,7 @@ Admin - Form
     background-color: white;
     padding: 25px 25px 80px 25px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 760px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     margin: 30px 0;
     position: relative;
 }
@@ -101,7 +100,7 @@ form {
 .form-group textarea {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #3e251e;
     border-radius: 4px;
 }
 
@@ -145,14 +144,57 @@ Post List
 #post-list .author {
     padding-top: 20px;
     display: flex;
+    font-style: italic;
 }
 .postItem{
     border-bottom: #3e251e solid 1px;  
     padding:30px 0;  
 }
 
-.commentList{padding-bottom: 0 !important;}
-.postItem {position: relative;}
+.commentList{
+    padding-bottom: 0 !important;
+}
+.postItem {
+    position: relative;
+}
+.delete-comment img{ 
+    width: 16px !important; 
+    cursor: pointer; 
+    float: left;
+    margin-right: 5px;
+}
+
+.toggle-comments{
+    color: #3e251e;
+    float: right;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+.toggle-comments:hover{
+    text-decoration: underline;
+}
+.comment-item{
+    display: flex;
+}
+.commentForm{
+    margin-left: 0px;
+    padding-top: 0;
+}
+.commentForm input{
+    height: 30px;
+    padding-left: 5px;
+    border-radius: 4px;
+    border: 1px solid #3e251e;
+
+}
+.commentForm textarea{
+    margin-top: 10px;
+    padding-left: 5px;
+    padding-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #3e251e;
+}
 
 /********************************************
 Footer 
@@ -320,3 +362,7 @@ button {
 .deleteBtn:hover {
     background: #ff3636;
 }
+
+
+
+

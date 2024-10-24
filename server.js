@@ -5,6 +5,7 @@ const authorController = require('./controllers/authorController');
 const commentController = require('./controllers/commentController'); 
 const logger = require('morgan');
 const cors = require('cors');
+const path = require('path');
 
 const PORT = process.env.PORT || 3001;
 
@@ -14,8 +15,13 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(express.json()); 
 
+// Serve static files from the client directory
+app.use(express.static(path.join(__dirname, 'client')));
+
 // Landing Page
-app.get('/', (req, res) => res.send('This is our landing page!'));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Adjust the path as necessary
+});
 
 // Post Routes
 app.get('/posts', postController.getAllPosts);

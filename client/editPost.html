@@ -13,8 +13,8 @@
     <div class="container">
         <header>
             <div class="title">
-                <h1>Travel News</h1>
-                <h2>Exclusive website with tips for your trips</h2>
+                <h1>Travel Land</h1>
+                <h2>Your Go-To Guide for Unforgettable Adventures</h2>
             </div>
             <nav>
                 <ul>
@@ -177,13 +177,11 @@
 
             try {
                 if (editingPostId) {
-                    // If editingPostId is set, update the existing post
                     await axios.put(`http://localhost:3001/posts/${editingPostId}`, postData);
-                    alert('Post updated successfully!');
+                    //alert('Post updated successfully!');
                 } else {
-                    // If no editingPostId, create a new post
                     await axios.post('http://localhost:3001/posts', postData);
-                    alert('Post created successfully!');
+                   // alert('Post created successfully!');
                 }
                 // Reset the form
                 document.getElementById('create-post-form').reset();
@@ -193,7 +191,6 @@
                 // Show the post list again
                 document.getElementById('post-list').style.display = 'block';
             
-
                 // Refresh the list of posts
                 fetchPosts();
                 
@@ -202,8 +199,6 @@
                     alert('Failed to submit post.');
                 }
             });
-
-            // Initialize
             fetchPosts();
             fetchAuthors();
         </script>
